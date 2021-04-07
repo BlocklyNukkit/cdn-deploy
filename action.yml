@@ -1,6 +1,6 @@
-name: "Tencent Cloud CDN Purge Cache"
-description: "Purge cache for Tencent Cloud CDN via its Python SDK API"
-author: keithnull
+name: "Deploy with Tencent CDN"
+description: "Refresh Tencent CDN and deploy github pages to wiki.blocklynukkit.com"
+author: superice666
 runs:
   using: docker
   image: Dockerfile
