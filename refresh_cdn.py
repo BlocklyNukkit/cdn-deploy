@@ -5,6 +5,7 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.cdn.v20180606 import cdn_client, models
 import json
 import os
+import requests
 
 
 def refresh_cdn(secret_id, secret_key, paths, flush_type="flush"):
@@ -35,15 +36,15 @@ def parse_env():
     # split and only keep non-whitespaces
     paths = filter(lambda pth: len(pth) > 0, map(str.strip, paths.split(",")))
     paths = list(paths)
+    # get lateset update files
+    response = json.loads(requests.get(url='https://api.github.com/repos/'+os.getenv("GITHUB_REPOSITORY")+'/commits/'+os.getenv("GITHUB_ACTION_REF")).text)
+    if response.get("files") != None and len(response.get("files")) != 0:
+        paths = []
+        for entry in response["files"]:
+            paths.append("https://wiki.blocklynukkit.com/"+entry["filename"])
     assert len(paths) >= 1, "Please specify at least one path to refresh"
     flush_type = os.getenv("FLUSH_TYPE", "flush")
-    # print event details
-    event_file = open(os.getenv("GITHUB_EVENT_PATH", "/github/workflow/event.json"),"r")
-    print(event_file.read())
-    event_file.close()
-    # print all envs
-    for key in os.environ:
-        print(key + ' : ' + os.environ[key])
+    print(paths)
     return secret_id, secret_key, paths, flush_type
 
 
