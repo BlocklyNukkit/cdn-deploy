@@ -37,9 +37,10 @@ def parse_env():
     paths = list(paths)
     assert len(paths) >= 1, "Please specify at least one path to refresh"
     flush_type = os.getenv("FLUSH_TYPE", "flush")
-    # print all envs
-    for key in os.environ:
-        print(key + ' : ' + os.environ[key])
+    # print event details
+    event_file = open(os.getenv("GITHUB_EVENT_PATH", "/github/workflow/event.json"),"r")
+    print(event_file.read())
+    event_file.close()
     return secret_id, secret_key, paths, flush_type
 
 
