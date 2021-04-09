@@ -39,7 +39,7 @@ def parse_env():
     flush_type = os.getenv("FLUSH_TYPE", "flush")
     # print all envs
     for key in os.environ:
-        print(key + ' : ' + env_dist[key])
+        print(key + ' : ' + os.environ[key])
     return secret_id, secret_key, paths, flush_type
 
 
