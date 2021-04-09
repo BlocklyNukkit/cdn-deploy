@@ -16,15 +16,14 @@ def refresh_cdn(secret_id, secret_key, paths, flush_type="flush"):
     client_profile.httpProfile = http_profile
     client = cdn_client.CdnClient(cred, "", client_profile)
 
-    req = models.PurgePathCacheRequest()
+    req = models.PurgeUrlsCacheRequest()
     params = {
-        "Paths": paths,
-        "FlushType": flush_type,
+        "Urls": [ "page_build" ],
+        "UrlEncode": True
     }
-    params = json.dumps(params)
-    req.from_json_string(params)
+    req.from_json_string(json.dumps(params))
 
-    return client.PurgePathCache(req)
+    return client.PurgeUrlsCache(req)
 
 
 def parse_env():
@@ -38,6 +37,9 @@ def parse_env():
     paths = list(paths)
     assert len(paths) >= 1, "Please specify at least one path to refresh"
     flush_type = os.getenv("FLUSH_TYPE", "flush")
+    # print all envs
+    for key in os.environ:
+        print(key + ' : ' + env_dist[key])
     return secret_id, secret_key, paths, flush_type
 
 
