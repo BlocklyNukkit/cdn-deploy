@@ -41,6 +41,9 @@ def parse_env():
     event_file = open(os.getenv("GITHUB_EVENT_PATH", "/github/workflow/event.json"),"r")
     print(event_file.read())
     event_file.close()
+    # print all envs
+    for key in os.environ:
+        print(key + ' : ' + os.environ[key])
     return secret_id, secret_key, paths, flush_type
 
 
