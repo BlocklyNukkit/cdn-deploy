@@ -18,7 +18,7 @@ def refresh_cdn(secret_id, secret_key, paths, flush_type="flush"):
 
     req = models.PurgeUrlsCacheRequest()
     params = {
-        "Urls": [ "page_build" ],
+        "Urls": paths,
         "UrlEncode": True
     }
     req.from_json_string(json.dumps(params))
