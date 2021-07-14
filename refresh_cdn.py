@@ -42,6 +42,7 @@ def parse_env():
         paths = []
         for entry in response["files"]:
             paths.append("https://wiki.blocklynukkit.com/"+entry["filename"].replace(".md",".html"))
+            paths.append("https://wiki.blocklynukkit.com/"+entry["filename"])
     assert len(paths) >= 1, "Please specify at least one path to refresh"
     flush_type = os.getenv("FLUSH_TYPE", "flush")
     print(paths)
